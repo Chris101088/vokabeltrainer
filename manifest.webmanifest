@@ -1,0 +1,18 @@
+{
+  "name": "Mein Vokabeltrainer",
+  "short_name": "Vokabeltrainer",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6fb",
+  "theme_color": "#2459d3",
+  "description": "Englisch-Deutsch-Vokabeltrainer mit Schulvokabeln und Beispielsätzen.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

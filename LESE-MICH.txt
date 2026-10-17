@@ -1,0 +1,7 @@
+MEIN VOKABELTRAINER – OFFLINE-PWA-Paket
+
+Diese Version ist für die Installation als Progressive Web App (PWA) vorbereitet. Nach der Installation werden App-Datei, Vokabeln und Oberfläche offline verfügbar sein. Die Sprachausgabe des englischen Beispielsatzes funktioniert offline nur, wenn auf dem Android-Handy eine englische Text-zu-Sprache-Stimme installiert ist.
+
+Wichtig: Ein Service Worker funktioniert aus Sicherheitsgründen nicht, wenn man index.html einfach als lokale Datei öffnet. Für die Installation als App muss dieses Paket EINMAL auf eine HTTPS-Adresse gestellt werden (z. B. eine private statische Website). Danach die Seite in Chrome am Android-Handy öffnen und im Browser-Menü „App installieren“ oder „Zum Startbildschirm hinzufügen“ wählen. Danach kann die App ohne Internet gestartet werden.
+
+Dieses ZIP ist noch keine APK-Datei. Eine APK müsste separat als Android-Projekt gebaut und signiert werden.

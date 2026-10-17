@@ -452,7 +452,7 @@ $('answerForm').onsubmit = e => {
   checked = true;
   const answer = norm($('answer').value);
   const raw = current.dir === 'en-de' ? current.de : current.en;
-  $('solution').textContent = 'Richtige Übersetzung: ' + raw;
+  $('solution').textContent = raw;
 $('solution').classList.remove('hidden');
   const targets = raw.split(/[;|]/).map(norm);
 const ok = targets.includes(answer) || targets.some(t => t.split(/\s*\/\s*/).includes(answer));

@@ -92,7 +92,53 @@ function renderList() {
   });
 }
 function reset(){current=null;checked=false;$('question').textContent='Bereit?';$('prompt').textContent='Tippe auf „Nächste Vokabel“.';$('answer').value='';$('feedback').className='hidden';$('checkBtn').disabled=true;$('nextBtn').disabled=!words.length;$('progress').textContent='Bereit';}
-function next(){if(!words.length)return;let pool=words.map((w,i)=>({w,i})).filter(x=>words.length<2||!asked.has(x.i));if(!pool.length){asked.clear();pool=words.map((w,i)=>({w,i}))}let chosen=pool[Math.floor(Math.random()*pool.length)];current=chosen.w;asked.add(chosen.i);let dir=$('direction').value;if(dir==='mix')dir=Math.random()<.5?'en-de':'de-en';current.dir=dir;checked=false;$('question').textContent=dir==='en-de'?current.en:current.de;$('prompt').textContent=dir==='en-de'?'Übersetze ins Deutsche.':'Übersetze ins Englische.';$('answer').value='';$('checkBtn').disabled=false;$('nextBtn').disabled=true;$('feedback').className='hidden';$('progress').textContent='Vokabel '+asked.size+' / '+words.length;$('answer').focus()}
+function next() {
+  if (!words.length) return;
+
+  let pool = words.map((w, i) => ({w, i}));
+
+  if (pool.length > 1 && current) {
+    pool = pool.filter(x => x.w !== current);
+  }
+
+  const weights = pool.map(x =>
+    1 + Math.max(0, Number(x.w.mistakes) || 0) * 2
+  );
+
+  const total = weights.reduce((sum, weight) => sum + weight, 0);
+  let pick = Math.random() * total;
+  let chosen = pool[0];
+
+  for (let i = 0; i < pool.length; i++) {
+    pick -= weights[i];
+    if (pick < 0) {
+      chosen = pool[i];
+      break;
+    }
+  }
+
+  current = chosen.w;
+  asked.add(chosen.i);
+
+  let dir = $('direction').value;
+  if (dir === 'mix') {
+    dir = Math.random() < 0.5 ? 'en-de' : 'de-en';
+  }
+
+  current.dir = dir;
+  checked = false;
+  $('question').textContent = dir === 'en-de' ? current.en : current.de;
+  $('prompt').textContent = dir === 'en-de'
+    ? 'Übersetze ins Deutsche.'
+    : 'Übersetze ins Englische.';
+  $('answer').value = '';
+  $('answer').disabled = false;
+  $('checkBtn').disabled = false;
+  $('nextBtn').disabled = true;
+  $('feedback').className = 'hidden';
+  $('progress').textContent = 'Geübt: ' + asked.size + ' / ' + words.length;
+  $('answer').focus();
+}
 $('nextBtn').onclick=next;$('direction').onchange=()=>{asked.clear();reset()};
 $('answerForm').onsubmit = e => {
   e.preventDefault();

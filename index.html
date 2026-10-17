@@ -1,6 +1,300 @@
 <!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2459d3"><title>Mein Vokabeltrainer</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f4f6fb;color:#17233b;font-family:system-ui,-apple-system,Segoe UI,sans-serif}header{background:#2459d3;color:#fff;padding:22px 18px;border-radius:0 0 24px 24px}h1{font-size:1.4rem;margin:0}header p{margin:6px 0 0;opacity:.9}main{max-width:620px;margin:auto;padding:14px}.tabs{display:flex;gap:8px;margin-bottom:12px}button{font:inherit;font-weight:650;border:0;border-radius:12px;padding:12px;background:#2459d3;color:white;cursor:pointer}.tabs button{flex:1}.secondary{background:#e5eaf5;color:#17233b}.card{background:white;border-radius:18px;padding:17px;margin-bottom:13px;box-shadow:0 3px 14px #17233b0b}.row{display:flex;gap:8px;align-items:center;justify-content:space-between}.small{font-size:.85rem;color:#647089}select,input{font:inherit;border:1px solid #d4dbea;border-radius:11px;padding:12px;background:white;color:#17233b}select{max-width:60%;width:auto}input{width:100%}.word{text-align:center;font-size:2rem;font-weight:800;margin:26px 0 8px;overflow-wrap:anywhere}.prompt{text-align:center;color:#647089}.hidden{display:none!important}.feedback{padding:12px;border-radius:12px;margin-top:12px;font-weight:650}.good{background:#e5f7ed;color:#16794b}.bad{background:#fff0ee;color:#b42318}.stats{display:flex;gap:8px}.stat{flex:1;text-align:center;background:#eef3ff;padding:12px;border-radius:12px}.stat strong{display:block;font-size:1.3rem}label{display:block;font-weight:650;margin:12px 0 6px}.item{padding:10px;border:1px solid #e4e8f1;border-radius:10px;margin:7px 0;overflow-wrap:anywhere}.item button{float:right;padding:5px 8px;background:#fff0ee;color:#b42318}.item:after{content:"";display:block;clear:both}footer{text-align:center;color:#647089;font-size:.8rem;padding:6px 0 22px}
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: #2459d3;
+  --blue-dark: #1946ad;
+  --blue-light: #eaf0ff;
+  --background: #f3f6fc;
+  --text: #17233b;
+  --muted: #647089;
+  --border: #e1e7f2;
+  --white: #ffffff;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+header {
+  background: linear-gradient(135deg, #2459d3, #4778ed);
+  color: white;
+  padding: 28px 20px 30px;
+  border-radius: 0 0 28px 28px;
+  box-shadow: 0 8px 24px #2459d326;
+}
+
+h1 {
+  font-size: 1.65rem;
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+header p {
+  margin: 9px 0 0;
+  opacity: 0.92;
+  font-size: 0.95rem;
+}
+
+main {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 20px 15px;
+}
+
+.tabs {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 16px;
+  padding: 5px;
+  background: #e6ebf6;
+  border-radius: 15px;
+}
+
+button {
+  font: inherit;
+  font-weight: 650;
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 16px;
+  background: var(--blue);
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+
+button:hover {
+  background: var(--blue-dark);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #9bb7ff;
+  outline-offset: 2px;
+}
+
+.tabs button {
+  flex: 1;
+  background: transparent;
+  color: var(--muted);
+}
+
+.tabs button:not(.secondary) {
+  background: white;
+  color: var(--blue);
+  box-shadow: 0 2px 7px #17233b0d;
+}
+
+.secondary {
+  background: var(--blue-light);
+  color: var(--blue);
+}
+
+.secondary:hover {
+  background: #dbe5ff;
+  color: var(--blue-dark);
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid #e9edf5;
+  border-radius: 22px;
+  padding: 21px;
+  margin-bottom: 16px;
+  box-shadow: 0 5px 22px #233b6509;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.small {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+select,
+input {
+  font: inherit;
+  border: 1px solid #d6deed;
+  border-radius: 12px;
+  padding: 13px;
+  background: white;
+  color: var(--text);
+}
+
+select {
+  max-width: 65%;
+  width: auto;
+}
+
+input {
+  width: 100%;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--blue);
+  outline: none;
+  box-shadow: 0 0 0 3px #2459d31a;
+}
+
+.word {
+  text-align: center;
+  font-size: clamp(2rem, 8vw, 2.7rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  margin: 32px 0 12px;
+  overflow-wrap: anywhere;
+  color: #183b85;
+}
+
+.prompt {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.feedback {
+  padding: 15px;
+  border-radius: 14px;
+  margin-top: 14px;
+  font-weight: 650;
+  line-height: 1.6;
+}
+
+.good {
+  background: #e5f7ed;
+  color: #16794b;
+  border: 1px solid #c6ecd6;
+}
+
+.bad {
+  background: #fff0ee;
+  color: #b42318;
+  border: 1px solid #f8d4cf;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.stat {
+  min-width: 0;
+  text-align: center;
+  background: #f0f4ff;
+  border: 1px solid #e5ebff;
+  padding: 14px 5px;
+  border-radius: 15px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 1.55rem;
+  line-height: 1.4;
+  color: var(--blue);
+}
+
+.stat .small {
+  font-size: 0.78rem;
+}
+
+label {
+  display: block;
+  font-weight: 650;
+  margin: 14px 0 7px;
+}
+
+.item {
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  margin: 9px 0;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+  background: white;
+}
+
+.item button {
+  float: right;
+  padding: 6px 10px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  background: #fff0ee;
+  color: #b42318;
+  font-size: 0.85rem;
+}
+
+.item:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+h2 {
+  font-size: 1.2rem;
+  letter-spacing: -0.3px;
+  margin: 0 0 14px;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding: 10px 0 25px;
+}
+
+@media (max-width: 380px) {
+  main {
+    padding: 14px 10px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .stats {
+    gap: 5px;
+  }
+
+  .stat {
+    padding: 11px 2px;
+  }
+
+  .stat .small {
+    font-size: 0.72rem;
+  }
+
+  select {
+    max-width: 62%;
+    font-size: 0.85rem;
+  }
+}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">

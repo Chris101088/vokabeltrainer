@@ -164,14 +164,14 @@ const ok = targets.includes(answer) || targets.some(t => t.split(/\s*\/\s*/).inc
     $('feedback').className = 'feedback good';
     $('feedback').textContent = 'Richtig! 🎉 Der Satz wird vorgelesen.';
     $('feedback').textContent += ' Richtige Antwort: ' + raw;
-    if (current.sentence) speak(current.sentence);
+
   } else {
     wrong++;
     current.mistakes = Math.min(100, (Number(current.mistakes) || 0) + 1);
     $('feedback').className = 'feedback bad';
     $('feedback').textContent = 'Noch nicht ganz. Lösung: ' + raw;
   }
-
+    if (current.sentence) speak(current.sentence);
   try {
     localStorage.setItem(STATS_KEY, JSON.stringify({right, wrong}));
   } catch (e) {}

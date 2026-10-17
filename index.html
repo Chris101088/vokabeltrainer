@@ -32,6 +32,7 @@ $('exportBtn').onclick=()=>{let txt=words.map(w=>[w.en,w.de,w.sentence||''].join
 save();stats();reset();$('checkBtn').disabled=true;
 </script><script>
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  <!-- Vokabeltrainer Update -->
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }
 </script>

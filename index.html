@@ -163,6 +163,7 @@ const ok = targets.includes(answer) || targets.some(t => t.split(/\s*\/\s*/).inc
     current.mistakes = Math.max(0, (Number(current.mistakes) || 0) - 1);
     $('feedback').className = 'feedback good';
     $('feedback').textContent = 'Richtig! 🎉 Der Satz wird vorgelesen.';
+    $('feedback').textContent += ' Richtige Antwort: ' + raw;
     if (current.sentence) speak(current.sentence);
   } else {
     wrong++;

@@ -21,7 +21,67 @@ function speak(s){if(!s||!('speechSynthesis'in window))return;window.speechSynth
 function tab(which){$('practice').classList.toggle('hidden',which!=='practice');$('manage').classList.toggle('hidden',which!=='manage');$('practiceTab').classList.toggle('secondary',which!=='practice');$('manageTab').classList.toggle('secondary',which!=='manage');if(which==='manage')renderList()}
 $('practiceTab').onclick=()=>tab('practice');$('manageTab').onclick=()=>tab('manage');
 function stats(){$('correct').textContent=right;$('wrong').textContent=wrong;$('total').textContent=words.length}
-function renderList(){$('wordList').innerHTML='';if(!words.length){$('wordList').textContent='Noch keine Vokabeln.';return}words.forEach((w,i)=>{let d=document.createElement('div');d.className='item';let b=document.createElement('button');b.textContent='Löschen';b.onclick=()=>{words.splice(i,1);save();reset()};d.append(b,document.createTextNode(w.en+' — '+w.de));$('wordList').append(d)})}
+function renderList() {
+  $('wordList').innerHTML = '';
+
+  if (!words.length) {
+    $('wordList').textContent = 'Noch keine Vokabeln.';
+    return;
+  }
+
+  words.forEach((w, i) => {
+    const d = document.createElement('div');
+    d.className = 'item';
+
+    const edit = document.createElement('button');
+    edit.textContent = 'Bearbeiten';
+    edit.style.cssText =
+      'float:right;background:#e5eaf5;color:#17233b;margin-right:6px';
+
+    edit.onclick = () => {
+      const en = prompt('Englisch:', w.en);
+      if (en === null) return;
+
+      const de = prompt('Deutsch:', w.de);
+      if (de === null) return;
+
+      const sentence = prompt(
+        'Beispielsatz (optional):',
+        w.sentence || ''
+      );
+      if (sentence === null) return;
+
+      if (!en.trim() || !de.trim()) {
+        alert('Bitte Englisch und Deutsch ausfüllen.');
+        return;
+      }
+
+      words[i] = {
+        en: en.trim(),
+        de: de.trim(),
+        sentence: sentence.trim()
+      };
+
+      save();
+    };
+
+    const del = document.createElement('button');
+    del.textContent = 'Löschen';
+    del.onclick = () => {
+      words.splice(i, 1);
+      save();
+      reset();
+    };
+
+    d.append(
+      edit,
+      del,
+      document.createTextNode(w.en + ' — ' + w.de)
+    );
+
+    $('wordList').append(d);
+  });
+}
 function reset(){current=null;checked=false;$('question').textContent='Bereit?';$('prompt').textContent='Tippe auf „Nächste Vokabel“.';$('answer').value='';$('feedback').className='hidden';$('checkBtn').disabled=true;$('nextBtn').disabled=!words.length;$('progress').textContent='Bereit';}
 function next(){if(!words.length)return;let pool=words.map((w,i)=>({w,i})).filter(x=>words.length<2||!asked.has(x.i));if(!pool.length){asked.clear();pool=words.map((w,i)=>({w,i}))}let chosen=pool[Math.floor(Math.random()*pool.length)];current=chosen.w;asked.add(chosen.i);let dir=$('direction').value;if(dir==='mix')dir=Math.random()<.5?'en-de':'de-en';current.dir=dir;checked=false;$('question').textContent=dir==='en-de'?current.en:current.de;$('prompt').textContent=dir==='en-de'?'Übersetze ins Deutsche.':'Übersetze ins Englische.';$('answer').value='';$('checkBtn').disabled=false;$('nextBtn').disabled=true;$('feedback').className='hidden';$('progress').textContent='Vokabel '+asked.size+' / '+words.length;$('answer').focus()}
 $('nextBtn').onclick=next;$('direction').onchange=()=>{asked.clear();reset()};
